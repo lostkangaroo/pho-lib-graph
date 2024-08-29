@@ -49,4 +49,32 @@ trait SerializableTrait
                 $this->$key = $value;
         }
     }
+
+    /**
+    * @internal
+    *
+    * Used for serialization.
+    *
+    * @return array of values to serialize.
+    */
+    public function __serialize(): array
+    {
+        return get_object_vars($this);
+    }
+
+    /**
+    * @internal
+    *
+    * Used to rebuild object after deserialization.
+    *
+    * @param array $data
+    *
+    * @return void
+    */
+    public function __unserialize(array $data): void
+    {
+        foreach($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
 }
