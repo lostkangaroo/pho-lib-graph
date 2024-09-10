@@ -13,17 +13,16 @@ namespace Pho\Lib\Graph;
 
 /**
  * Graph contains nodes
- * 
+ *
  * Graph contains objects that implement NodeInterface
  * interface, such as Node and Subgraph objects, but not
  * Edges.
- * 
+ *
  * @author Emre Sokullu <emre@phonetworks.org>
  */
-class Graph implements 
+class Graph implements
     GraphInterface,
     HookableInterface,
-    \Serializable, 
     Event\EmitterInterface
 {
 
@@ -45,7 +44,7 @@ class Graph implements
      */
     public function __construct(bool $emit_node_add_signal = true)
     {
-        $this->emit_node_add_signal  = $emit_node_add_signal; 
+        $this->emit_node_add_signal  = $emit_node_add_signal;
         $this->init();
     }
 
@@ -56,7 +55,7 @@ class Graph implements
     {
         return ID::root();
     }
-    
+
     /**
      * {@inheritDoc}
      */

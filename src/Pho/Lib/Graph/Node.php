@@ -13,31 +13,30 @@ namespace Pho\Lib\Graph;
 
 /**
  * Atomic graph entity, Node
- * 
- * A graph is made up of nodes (aka. nodes, or points) which are connected by 
- * edges (aka arcs, or lines) therefore node is the fundamental unit of 
+ *
+ * A graph is made up of nodes (aka. nodes, or points) which are connected by
+ * edges (aka arcs, or lines) therefore node is the fundamental unit of
  * which graphs are formed.
- * 
+ *
  * Nodes are indivisible, yet they share some common characteristics with edges.
  * In Pho context, these commonalities are represented with the EntityInterface.
- * 
+ *
  * Uses Observer Pattern to observe updates from its attribute bags.
- * 
+ *
  * Last but not least, this class is declared \Serializable. While it does nothing
  * special within this class, this declaration may be useful for subclasses to override
  * and persist data.
- * 
+ *
  * @see EdgeList
- * 
+ *
  * @author Emre Sokullu <emre@phonetworks.org>
  */
-class Node implements 
-    EntityInterface, 
+class Node implements
+    EntityInterface,
     EntityWorkerInterface,
-    NodeInterface, 
+    NodeInterface,
     NodeWorkerInterface,
     HookableInterface,
-    \Serializable, 
     Event\EmitterInterface
 {
 
@@ -72,7 +71,7 @@ class Node implements
     /**
      * {@inheritdoc}
      */
-    public function __construct(GraphInterface $context) 
+    public function __construct(GraphInterface $context)
     {
         $this->____construct();
         $this->edge_list = new EdgeList($this);
@@ -88,7 +87,7 @@ class Node implements
      * recursively to the list of observers for deletion.
      *
      * @param GraphInterface $context
-     * 
+     *
      * @return void
      */
     /*private function attachGraphObservers(GraphInterface $context): void
@@ -108,7 +107,7 @@ class Node implements
     {
         if(isset($this->context)) {
             return $this->context;
-        } 
+        }
         return $this->hookable();
     }
 
@@ -123,7 +122,7 @@ class Node implements
         $this->context->add($this);
         $this->emit("modified");
     }
-    
+
     /**
      * {@inheritdoc}
      */

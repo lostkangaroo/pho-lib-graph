@@ -13,26 +13,25 @@ namespace Pho\Lib\Graph;
 
 /**
  * Atomic graph entity, Edge
- * 
+ *
  * Edges (aka lines or arcs in graph theory) are used to
  * represent the relationships between Nodes of a Graph
- * therefore it is a fundamental unit of 
+ * therefore it is a fundamental unit of
  * which graphs are formed.
- * 
+ *
  * Uses Observer Pattern to observe updates from its attribute bags,
  * as well as tail nodes.
- * 
+ *
  * @author Emre Sokullu <emre@phonetworks.org>
  */
-class Edge implements 
-    EntityInterface, 
+class Edge implements
+    EntityInterface,
     EntityWorkerInterface,
-    EdgeInterface, 
+    EdgeInterface,
     HookableInterface,
-    \Serializable,
     Event\EmitterInterface
 {
-    
+
     use SerializableTrait;
     use Event\EmitterTrait;
     use EntityTrait {
@@ -54,7 +53,7 @@ class Edge implements
      * @var string
      */
     protected $tail_id;
-    
+
     /**
      * Head node. Where this is directed towards.
      *
@@ -91,15 +90,15 @@ class Edge implements
      * @param NodeInterface      $tail The node where this edge originates from.
      * @param ?NodeInterface      $head The node where this edge is targeted at. Default: null.
      * @param ?PredicateInterface $predicate The predicate of this edge. Default: null.
-     * 
+     *
      * @throws Exceptions\DuplicateEdgeException when it's not a multiplicable edge and there's an attempt to create multiple edges between a particular pair of head and tail nodes.
      */
-    public function __construct(NodeInterface $tail, ?NodeInterface $head = null, ?PredicateInterface $predicate = null) 
+    public function __construct(NodeInterface $tail, ?NodeInterface $head = null, ?PredicateInterface $predicate = null)
     {
         $this->predicate = $this->resolvePredicate($predicate, Predicate::class);
 
-        if( !$this->predicate->multiplicable() 
-            && !is_null($head) 
+        if( !$this->predicate->multiplicable()
+            && !is_null($head)
             && $tail->edges()->to($head->id(), get_class($this))->count() != 0
         ) {
             throw new Exceptions\DuplicateEdgeException($tail, $head, get_class($this));
@@ -121,7 +120,7 @@ class Edge implements
             $this->head->edges()->addIncoming($this);
             $this->tail->edges()->addOutgoing($this);
         }
-        
+
         $this->predicate_label = (string) $this->predicate;
         $this->tail->emit("edge.created", [$this]);
         if(!is_null($head)) {
@@ -138,13 +137,13 @@ class Edge implements
 
     /**
      * Resolves the predicate of this class.
-     * 
+     *
      * The predicate may be given. Or it may be resolved by the name of this class. Or it may be given
      * a fallback. As a last resort, it may use the Predicate class available in pho-lib-graph.
      *
      * @param PredicateInterface|null $predicate Predicate may be given.
      * @param string $fallback or the fallback class may be given, asking the method find something more specific if available.
-     * 
+     *
      * @return PredicateInterface A predicate object.
      */
     protected function resolvePredicate(?PredicateInterface $predicate, string $fallback): PredicateInterface
@@ -204,7 +203,7 @@ class Edge implements
 
         if(isset($this->head)) {
             return $this->head;
-        } 
+        }
         return $this->hookable();
     }
 
@@ -226,7 +225,7 @@ class Edge implements
     {
         if(isset($this->tail)) {
             return $this->tail;
-        } 
+        }
         return $this->hookable();
     }
 
@@ -245,7 +244,7 @@ class Edge implements
     {
         if(isset($this->predicate)) {
             return $this->predicate;
-        } 
+        }
         return $this->hookable();
     }
 
@@ -269,7 +268,7 @@ class Edge implements
         }
         $this->destroy();
     }
-    
+
 
     /**
      * {@inheritdoc}
