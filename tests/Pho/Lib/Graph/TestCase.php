@@ -11,15 +11,15 @@
 
 namespace Pho\Lib\Graph;
 
-class TestCase extends \PHPUnit\Framework\TestCase 
+class TestCase extends \PHPUnit\Framework\TestCase
 {
     protected $graph;
 
-    public function setUp() {
+    public function setUp(): void {
         $this->graph = new Graph();
     }
 
-    public function tearDown() {
+    public function tearDown(): void {
         unset($this->graph);
     }
 }

@@ -21,58 +21,53 @@ namespace Pho\Lib\Graph;
  * @author Emre Sokullu <emre@phonetworks.org>
  */
 class Graph implements
-    GraphInterface,
-    HookableInterface,
-    Event\EmitterInterface
-{
+  GraphInterface,
+  HookableInterface,
+  Event\EmitterInterface {
 
-    use SerializableTrait;
-    use Event\EmitterTrait;
-    use GraphTrait;
+  use SerializableTrait;
+  use Event\EmitterTrait;
+  use GraphTrait;
 
-    /**
-     * Whether the graph and its subgraphs emit node addition.
-     *
-     * @var boolean
-     */
-    protected $emit_node_add_signal = true;
+  /**
+   * Whether the graph and its subgraphs emit node addition.
+   *
+   * @var boolean
+   */
+  protected $emit_node_add_signal = TRUE;
 
-    /**
-     * Constructor.
-     *
-     * @param bool $defer_signals
-     */
-    public function __construct(bool $emit_node_add_signal = true)
-    {
-        $this->emit_node_add_signal  = $emit_node_add_signal;
-        $this->init();
-    }
+  /**
+   * Constructor.
+   *
+   * @param bool $defer_signals
+   */
+  public function __construct(bool $emit_node_add_signal = TRUE) {
+    $this->emit_node_add_signal = $emit_node_add_signal;
+    $this->init();
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function id(): ID
-    {
-        return ID::root();
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function id(): ID {
+    return ID::root();
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function canEmitNodeAddSignals(): bool
-    {
-        return (bool) $this->emit_node_add_signal;
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public function canEmitNodeAddSignals(): bool {
+    return (bool) $this->emit_node_add_signal;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray(): array
-    {
-        return array_merge(
-            $this->graphToArray(),
-            ["listeners"=>$this->listeners_flat]
-        );
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function toArray(): array {
+    return array_merge(
+      $this->graphToArray(),
+      ["listeners" => $this->listeners_flat]
+    );
+  }
 
 }

@@ -13,14 +13,12 @@
  *
  * @author Emre Sokullu
  ************************************************************/
-function nl(): void
-{
-    echo PHP_EOL;
+function nl(): void {
+  echo PHP_EOL;
 }
 
-
- // 1. Initiate the autoloaders first.
-require(__DIR__."/../vendor/autoload.php");
+// 1. Initiate the autoloaders first.
+require(__DIR__ . "/../vendor/autoload.php");
 
 use Pho\Lib\Graph;
 
@@ -34,13 +32,13 @@ $brad_fitzpatrick = new Graph\Node($google); // google
 $ray_kurzweil = new Graph\Node($google); // google
 
 /************************************************************
- * Here is how you can play with it. Fore more information refer 
+ * Here is how you can play with it. Fore more information refer
  * to the README.md in the root folder.
  ************************************************************/
 
-/*
 echo "Members of the World Graph:";
 nl();
+
 print_r($world->toArray()["members"]);
 
 nl();
@@ -53,4 +51,3 @@ print_r($google->toArray()["members"]);
 
 nl();
 exit(0);
-*/
